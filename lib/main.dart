@@ -1,74 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:credit_card_assist/screens/home_screen.dart';
+
 
 void main() {
   runApp(CreditCardAssistApp());
 }
 
 class CreditCardAssistApp extends StatelessWidget {
+  const CreditCardAssistApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Credit Card Assist',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      home: HomeScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _linkController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Smart Card Recommendation'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Paste the product link below:',
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 12),
-            TextField(
-              controller: _linkController,
-              decoration: InputDecoration(
-                hintText: 'https://example.com/product...',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  String enteredLink = _linkController.text;
-                  if (enteredLink.isNotEmpty) {
-                    print('Link submitted: $enteredLink');
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Link sent for analysis!'),
-                      ),
-                    );
-                  }
-                },
-                child: Text('Analyze and Recommend Card'),
-              ),
-            ),
-          ],
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: const Color(0xFF0E0F1B),
+        textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0xFF181826),
+          hintStyle: const TextStyle(color: Color(0xFF9F9F9F)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
         ),
       ),
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
     );
   }
 }
