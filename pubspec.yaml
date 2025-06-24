@@ -11,13 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # iOS-style icons
   cupertino_icons: ^1.0.8
-
-  # Google Fonts (like Inter)
   google_fonts: ^6.1.0
-
-  # Lint rules for clean code
   flutter_lints: ^5.0.0
 
 dev_dependencies:
@@ -26,15 +21,8 @@ dev_dependencies:
 
 flutter:
 
-  # Use Material Design icons
   uses-material-design: true
 
-  # Add assets or fonts here if needed
-  # assets:
-  #   - assets/images/
-
-  # fonts:
-  #   - family: Inter
-  #     fonts:
-  #       - asset: fonts/Inter-Regular.ttf
-  #       - asset: fonts/Inter-Bold.ttf
+  assets:
+    - assets/user.png
+    - assets/logo.png
