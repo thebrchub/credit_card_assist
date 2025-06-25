@@ -10,10 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  fl_chart: ^0.63.0
 
   cupertino_icons: ^1.0.8
   google_fonts: ^6.1.0
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -26,3 +27,6 @@ flutter:
   assets:
     - assets/user.png
     - assets/logo.png
+
+
+  
