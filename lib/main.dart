@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'screens/home_screen.dart';
+import 'screens/main_dashboard.dart'; // ✅ Import the new dashboard
 
 void main() {
   runApp(const CreditCardAssistApp());
@@ -27,7 +27,7 @@ class CreditCardAssistApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: const MainDashboardScreen(), // ✅ Set the new entry point
     );
   }
 }

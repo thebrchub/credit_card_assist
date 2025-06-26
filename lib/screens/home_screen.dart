@@ -10,6 +10,7 @@ import 'package:credit_card_assist/screens/support_screen.dart';
 import 'package:credit_card_assist/screens/help_screen.dart';
 import 'package:credit_card_assist/screens/about_app_screen.dart';
 import 'package:credit_card_assist/screens/privacy_policy_screen.dart';
+import 'package:credit_card_assist/screens/edit_profile_screen.dart';
 
 
 
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(context, MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen()));
         break;
       case 'Edit Profile':
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$label tapped')));
+        Navigator.push(context, MaterialPageRoute(builder: (_) => const EditProfileScreen()));
         break;
       case 'Logout':
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Logged out')));
