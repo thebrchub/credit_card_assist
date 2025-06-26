@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:credit_card_assist/screens/home_screen.dart';
-
+import 'screens/home_screen.dart';
 
 void main() {
-  runApp(CreditCardAssistApp());
+  runApp(const CreditCardAssistApp());
 }
 
 class CreditCardAssistApp extends StatelessWidget {
@@ -28,7 +27,7 @@ class CreditCardAssistApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

@@ -5,7 +5,7 @@ import '../models/expense_model.dart';
 class ExpenseTile extends StatelessWidget {
   final Expense expense;
 
-  const ExpenseTile({Key? key, required this.expense}) : super(key: key);
+  const ExpenseTile({super.key, required this.expense});
 
   @override
   Widget build(BuildContext context) {
