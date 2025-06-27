@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:credit_card_assist/screens/my_cards_screen.dart';
-import 'package:credit_card_assist/screens/expense_tracker_screen.dart';
+import 'package:payzo/screens/my_cards_screen.dart';
+import 'package:payzo/screens/expense_tracker_screen.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:credit_card_assist/screens/home_screen.dart';
-import 'package:credit_card_assist/screens/expense_tracker_screen.dart';
-import 'package:credit_card_assist/screens/compare_prices_screen.dart';
+import 'package:payzo/screens/home_screen.dart';
+import 'package:payzo/screens/expense_tracker_screen.dart';
+import 'package:payzo/screens/compare_prices_screen.dart';
 
 class MainDashboardScreen extends StatefulWidget {
   const MainDashboardScreen({super.key});

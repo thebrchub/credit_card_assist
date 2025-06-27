@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "credit_card_assist" "\0"
+            VALUE "FileDescription", "payzo" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "credit_card_assist" "\0"
+            VALUE "InternalName", "payzo" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "credit_card_assist.exe" "\0"
-            VALUE "ProductName", "credit_card_assist" "\0"
+            VALUE "OriginalFilename", "payzo.exe" "\0"
+            VALUE "ProductName", "payzo" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

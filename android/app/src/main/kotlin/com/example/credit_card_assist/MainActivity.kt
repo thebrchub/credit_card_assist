@@ -1,4 +1,4 @@
-package com.example.credit_card_assist
+package com.example.payzo
 
 import io.flutter.embedding.android.FlutterActivity
 

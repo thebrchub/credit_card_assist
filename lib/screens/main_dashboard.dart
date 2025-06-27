@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:credit_card_assist/screens/home_screen.dart';
-import 'package:credit_card_assist/screens/expense_tracker_screen.dart';
-import 'package:credit_card_assist/screens/compare_prices_screen.dart';
+import 'package:payzo/screens/home_screen.dart';
+import 'package:payzo/screens/expense_tracker_screen.dart';
+import 'package:payzo/screens/compare_prices_screen.dart';
+import 'package:payzo/screens/my_cards_screen.dart'; // ✅ Import MyCardsScreen
 
 class MainDashboardScreen extends StatefulWidget {
   const MainDashboardScreen({super.key});
@@ -17,6 +18,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
     HomeScreen(),
     ExpenseTrackerScreen(),
     CompareProductPricesScreen(),
+    MyCardsScreen(), // ✅ Add MyCardsScreen
   ];
 
   void _onItemTapped(int index) {
@@ -53,6 +55,10 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.compare_arrows),
             label: 'Compare',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.credit_card),
+            label: 'My Cards', // ✅ New Tab Label
           ),
         ],
       ),

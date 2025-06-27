@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:credit_card_assist/screens/notification_settings_screen.dart';
+import 'package:payzo/screens/notification_settings_screen.dart';
 
 
 class CustomDrawer extends StatelessWidget {

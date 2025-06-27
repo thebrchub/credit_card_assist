@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:credit_card_assist/widgets/custom_drawer.dart';
-import 'package:credit_card_assist/screens/expense_tracker_screen.dart';
-import 'package:credit_card_assist/screens/compare_prices_screen.dart';
-import 'package:credit_card_assist/screens/my_cards_screen.dart';
-import 'package:credit_card_assist/screens/notification_settings_screen.dart';
-import 'package:credit_card_assist/screens/settings_screen.dart';
-import 'package:credit_card_assist/screens/support_screen.dart';
-import 'package:credit_card_assist/screens/help_screen.dart';
-import 'package:credit_card_assist/screens/about_app_screen.dart';
-import 'package:credit_card_assist/screens/privacy_policy_screen.dart';
-import 'package:credit_card_assist/screens/edit_profile_screen.dart';
+import 'package:payzo/widgets/custom_drawer.dart';
+import 'package:payzo/screens/expense_tracker_screen.dart';
+import 'package:payzo/screens/compare_prices_screen.dart';
+import 'package:payzo/screens/my_cards_screen.dart';
+import 'package:payzo/screens/notification_settings_screen.dart';
+import 'package:payzo/screens/settings_screen.dart';
+import 'package:payzo/screens/support_screen.dart';
+import 'package:payzo/screens/help_screen.dart';
+import 'package:payzo/screens/about_app_screen.dart';
+import 'package:payzo/screens/privacy_policy_screen.dart';
+import 'package:payzo/screens/edit_profile_screen.dart';
 
 
 

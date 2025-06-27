@@ -1,4 +1,4 @@
-# credit_card_assist
+# payzo
 
 A new Flutter project.
 
