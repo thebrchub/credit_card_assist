@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'screens/main_dashboard.dart'; // ✅ Import the new dashboard
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+import 'models/card_model.dart'; // ✅ Create this next
+import 'screens/main_dashboard.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // ✅ Initialize Hive
+  final appDir = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(appDir.path);
+
+  // ✅ Register the adapter
+  Hive.registerAdapter(CreditCardAdapter());
+
+  // ✅ Open the box (persistent local storage)
+  await Hive.openBox<CreditCard>('userCards');
+
   runApp(const CreditCardAssistApp());
 }
 
@@ -27,7 +42,7 @@ class CreditCardAssistApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const MainDashboardScreen(), // ✅ Set the new entry point
+      home: const MainDashboardScreen(),
     );
   }
 }
