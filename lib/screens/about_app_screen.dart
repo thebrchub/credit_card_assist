@@ -27,12 +27,12 @@ class AboutAppScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Credit Card Assist", style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text("Payzo", style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 10),
             Text("Version 1.0.0", style: GoogleFonts.inter(color: Colors.white70)),
             const SizedBox(height: 20),
             Text(
-              "Credit Card Assist helps you make smart financial decisions by recommending the best credit card for your purchases based on offers, benefits, and price comparison. It also includes an expense tracker and a card management system.",
+              "Payzo helps you make smart financial decisions by recommending the best credit card for your purchases based on offers, benefits, and price comparison. It also includes an expense tracker and a card management system.",
               style: GoogleFonts.inter(color: Colors.white70),
             ),
             const SizedBox(height: 20),

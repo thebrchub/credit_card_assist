@@ -2,32 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'models/card_model.dart'; // ✅ Create this next
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'models/card_model.dart';
+import 'screens/splash_screen.dart';
+import 'screens/welcome_screen.dart';
 import 'screens/main_dashboard.dart';
+import 'screens/onboarding_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // ✅ Initialize Hive
   final appDir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDir.path);
-
-  // ✅ Register the adapter
   Hive.registerAdapter(CreditCardAdapter());
-
-  // ✅ Open the box (persistent local storage)
   await Hive.openBox<CreditCard>('userCards');
 
-  runApp(const CreditCardAssistApp());
+  // ✅ Onboarding check
+  final prefs = await SharedPreferences.getInstance();
+  final isOnboardingComplete = prefs.getBool('onboarding_complete') ?? false;
+
+  runApp(PayzoApp(showOnboarding: !isOnboardingComplete));
 }
 
-class CreditCardAssistApp extends StatelessWidget {
-  const CreditCardAssistApp({super.key});
+class PayzoApp extends StatelessWidget {
+  final bool showOnboarding;
+
+  const PayzoApp({super.key, required this.showOnboarding});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Credit Card Assist',
+      title: 'Payzo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color(0xFF0E0F1B),
         textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
@@ -41,8 +48,11 @@ class CreditCardAssistApp extends StatelessWidget {
           ),
         ),
       ),
-      debugShowCheckedModeBanner: false,
-      home: const MainDashboardScreen(),
+      home: showOnboarding ? const OnboardingScreen() : const MainDashboardScreen(),
+      routes: {
+        '/welcome': (context) => const WelcomeScreen(),
+        '/dashboard': (context) => const MainDashboardScreen(),
+      },
     );
   }
 }

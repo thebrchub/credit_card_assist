@@ -22,6 +22,7 @@ dependencies:
   path_provider: ^2.0.15
   month_year_picker: ^0.5.0+1
   shimmer: ^3.0.0  # or latest version
+  shared_preferences: ^2.2.2  # latest at time of writing
 
 
 dev_dependencies:
