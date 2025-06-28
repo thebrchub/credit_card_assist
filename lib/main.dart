@@ -9,6 +9,7 @@ import 'screens/splash_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/main_dashboard.dart';
 import 'screens/onboarding_screen.dart';
+import 'screens/login_or_dashboard_decider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +49,7 @@ class PayzoApp extends StatelessWidget {
           ),
         ),
       ),
-      home: showOnboarding ? const OnboardingScreen() : const MainDashboardScreen(),
+      home: const LoginOrDashboardDecider(),
       routes: {
         '/welcome': (context) => const WelcomeScreen(),
         '/dashboard': (context) => const MainDashboardScreen(),
