@@ -37,3 +37,6 @@ flutter:
   assets:
     - assets/user.png
     - assets/logo.png
+    - assets/onboard1.png
+    - assets/onboard2.png
+    - assets/onboard3.png

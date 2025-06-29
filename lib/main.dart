@@ -49,7 +49,10 @@ class PayzoApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const LoginOrDashboardDecider(),
+
+      // ✅ Show onboarding if not completed, else go to login/dashboard logic
+      home: showOnboarding ? const OnboardingScreen() : const LoginOrDashboardDecider(),
+
       routes: {
         '/welcome': (context) => const WelcomeScreen(),
         '/dashboard': (context) => const MainDashboardScreen(),
