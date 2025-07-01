@@ -9,7 +9,7 @@ import 'screens/splash_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/main_dashboard.dart';
 import 'screens/onboarding_screen.dart';
-import 'screens/login_or_dashboard_decider.dart';
+// Removed: import 'screens/login_or_dashboard_decider.dart'; ❌ Not needed anymore
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,17 +19,11 @@ void main() async {
   Hive.registerAdapter(CreditCardAdapter());
   await Hive.openBox<CreditCard>('userCards');
 
-  // ✅ Onboarding check
-  final prefs = await SharedPreferences.getInstance();
-  final isOnboardingComplete = prefs.getBool('onboarding_complete') ?? false;
-
-  runApp(PayzoApp(showOnboarding: !isOnboardingComplete));
+  runApp(const PayzoApp());
 }
 
 class PayzoApp extends StatelessWidget {
-  final bool showOnboarding;
-
-  const PayzoApp({super.key, required this.showOnboarding});
+  const PayzoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +44,11 @@ class PayzoApp extends StatelessWidget {
         ),
       ),
 
-      // ✅ Show onboarding if not completed, else go to login/dashboard logic
-      home: showOnboarding ? const OnboardingScreen() : const LoginOrDashboardDecider(),
-
+      // ✅ Initial screen: Splash which handles all the routing logic
+      initialRoute: '/',
       routes: {
+        '/': (context) => const SplashScreen(),
+        '/onboarding': (context) => const OnboardingScreen(),
         '/welcome': (context) => const WelcomeScreen(),
         '/dashboard': (context) => const MainDashboardScreen(),
       },

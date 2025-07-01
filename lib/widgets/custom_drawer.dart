@@ -35,9 +35,9 @@ class CustomDrawer extends StatelessWidget {
             _buildUserProfileSection(),
             const SizedBox(height: 20),
             const Divider(color: Colors.white24),
-            ...topItems.map((item) => _buildDrawerItem(item.icon, item.label)).toList(),
+            ...topItems.map((item) => _buildDrawerItem(item.icon, item.label)),
             const Divider(color: Colors.white24), // ✅ Added divider after "Compare Product Prices"
-            ...bottomItems.map((item) => _buildDrawerItem(item.icon, item.label)).toList(),
+            ...bottomItems.map((item) => _buildDrawerItem(item.icon, item.label)),
             const Spacer(),
             _buildLogoutButton(),
           ],
