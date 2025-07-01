@@ -43,36 +43,44 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0E0F1B),
       body: SafeArea(
         child: Stack(
           children: [
-            // Fullscreen Image Slider
+            // Fullscreen PageView with images
             PageView.builder(
               controller: _pageController,
               itemCount: _slides.length,
               onPageChanged: (index) => setState(() => _currentIndex = index),
               itemBuilder: (_, index) {
                 final slide = _slides[index];
-                return Container(
-                  width: size.width,
-                  height: size.height,
-                  padding: const EdgeInsets.all(24),
-                  color: const Color(0xFF0E0F1B),
+               return Container(
+  width: size.width,
+  height: size.height,
+  color: const Color(0xFF0E0F1B),
+  child: Center(
+    child: Image.asset(
+      slide['image']!,
+      width: size.width * 1, // 👈 75% of screen width
+      fit: BoxFit.contain,
+      errorBuilder: (_, __, ___) =>
+          const Icon(Icons.image_not_supported, size: 100, color: Colors.grey),
+    ),
+  ),
+);
+
+              },
+            ),
+
+            // Overlaying content
+            Column(
+              children: [
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Image.asset(
-                          slide['image']!,
-                          width: size.width * 0.85,
-                          fit: BoxFit.contain,
-                          errorBuilder: (_, __, ___) => const Icon(Icons.image_not_supported, size: 100, color: Colors.grey),
-                        ),
-                      ),
-                      const SizedBox(height: 30),
                       Text(
-                        slide['title']!,
+                        _slides[_currentIndex]['title']!,
                         style: GoogleFonts.inter(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -81,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        slide['subtitle']!,
+                        _slides[_currentIndex]['subtitle']!,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
                           color: Colors.white70,
@@ -91,14 +99,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       const SizedBox(height: 30),
                     ],
                   ),
-                );
-              },
-            ),
+                ),
 
-            // Dots & Buttons
-            Column(
-              children: [
-                const Spacer(),
+                // Dots Indicator
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(_slides.length, (index) {
@@ -115,6 +118,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   }),
                 ),
                 const SizedBox(height: 20),
+
+                // Bottom Buttons
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Row(

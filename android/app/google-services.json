@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "395962159335",
+    "project_id": "payzo-85f7c",
+    "storage_bucket": "payzo-85f7c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395962159335:android:0cb99dd18737dbfca4d242",
+        "android_client_info": {
+          "package_name": "com.example.payzo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXdZlzXfNQtc-bsPb0aTEhlNbFIjmckbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

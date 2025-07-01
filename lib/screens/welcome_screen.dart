@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../services/google_auth_service.dart'; // ✅ Corrected path
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -12,10 +13,16 @@ class WelcomeScreen extends StatelessWidget {
   }
 
   Future<void> _signInWithGoogle(BuildContext context) async {
-    // TODO: Replace with actual Google Sign-In later
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('is_logged_in', true);
-    Navigator.pushReplacementNamed(context, '/dashboard');
+    final user = await GoogleAuthService.signInWithGoogle();
+    if (user != null) {
+      Navigator.pushReplacementNamed(context, '/dashboard');
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Google Sign-In failed")),
+        );
+      }
+    }
   }
 
   @override
