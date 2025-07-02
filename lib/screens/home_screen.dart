@@ -11,7 +11,10 @@ import 'package:payzo/screens/help_screen.dart';
 import 'package:payzo/screens/about_app_screen.dart';
 import 'package:payzo/screens/privacy_policy_screen.dart';
 import 'package:payzo/screens/edit_profile_screen.dart';
-
+import 'package:payzo/services/google_auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:payzo/models/user_profile.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -25,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _linkController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void _navigateTo(String label) {
+  void _navigateTo(String label) async {
     Navigator.pop(context);
     switch (label) {
       case 'Expense Tracker':
@@ -59,7 +62,20 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(context, MaterialPageRoute(builder: (_) => const EditProfileScreen()));
         break;
       case 'Logout':
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Logged out')));
+        await GoogleAuthService.signOut();
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+        await Hive.box<AppUser>('userBox').put(
+          'profile',
+          AppUser(name: 'Guest User', email: '', phone: null, imagePath: null),
+        );
+
+        if (context.mounted) {
+          Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Logged out successfully')),
+          );
+        }
         break;
     }
   }

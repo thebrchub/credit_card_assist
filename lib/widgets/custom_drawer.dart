@@ -1,7 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:payzo/screens/notification_settings_screen.dart';
-
+import 'package:hive_flutter/hive_flutter.dart';
+import '../models/user_profile.dart';
 
 class CustomDrawer extends StatelessWidget {
   final Function(String) onItemSelected;
@@ -28,25 +29,34 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       backgroundColor: const Color(0xFF0E0F1B),
       child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            _buildUserProfileSection(),
-            const SizedBox(height: 20),
-            const Divider(color: Colors.white24),
-            ...topItems.map((item) => _buildDrawerItem(item.icon, item.label)),
-            const Divider(color: Colors.white24), // ✅ Added divider after "Compare Product Prices"
-            ...bottomItems.map((item) => _buildDrawerItem(item.icon, item.label)),
-            const Spacer(),
-            _buildLogoutButton(),
-          ],
+        child: ValueListenableBuilder(
+          valueListenable: Hive.box<AppUser>('userBox').listenable(),
+          builder: (context, Box<AppUser> box, _) {
+            final user = box.get('profile');
+
+            final isGuest = user == null || user.email.isEmpty;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                _buildUserProfileSection(user),
+                const SizedBox(height: 20),
+                const Divider(color: Colors.white24),
+                ...topItems.map((item) => _buildDrawerItem(item.icon, item.label)),
+                const Divider(color: Colors.white24),
+                ...bottomItems.map((item) => _buildDrawerItem(item.icon, item.label)),
+                const Spacer(),
+                if (!isGuest) _buildLogoutButton(), // only show if logged in
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _buildUserProfileSection() {
+  Widget _buildUserProfileSection(AppUser? user) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -54,17 +64,19 @@ class CustomDrawer extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircleAvatar(
-                backgroundImage: AssetImage('assets/user.png'),
+              CircleAvatar(
                 radius: 28,
+                backgroundImage: user?.imagePath != null &&
+                        File(user!.imagePath!).existsSync()
+                    ? FileImage(File(user.imagePath!))
+                    : const AssetImage('assets/user.png') as ImageProvider,
               ),
               const SizedBox(width: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'John Wick',
+                    user?.name ?? 'Guest User',
                     style: GoogleFonts.inter(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

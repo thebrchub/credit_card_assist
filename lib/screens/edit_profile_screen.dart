@@ -1,7 +1,10 @@
+// ... other imports
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:payzo/models/user_profile.dart';
 import 'package:payzo/screens/my_cards_screen.dart';
 import 'package:payzo/screens/expense_tracker_screen.dart';
 
@@ -17,9 +20,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   File? _profileImage;
   final ImagePicker _picker = ImagePicker();
 
-  final TextEditingController _nameController = TextEditingController(text: 'John Wick');
-  final TextEditingController _emailController = TextEditingController(text: 'john@example.com');
-  final TextEditingController _phoneController = TextEditingController(text: '9876543210');
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  void _loadUserData() {
+    final box = Hive.box<AppUser>('userBox');
+    final user = box.get('profile');
+
+    if (user != null) {
+      _nameController.text = user.name;
+      _emailController.text = user.email;
+      _phoneController.text = user.phone ?? '';
+      if (user.imagePath != null) {
+        _profileImage = File(user.imagePath!);
+      }
+    }
+  }
 
   void _pickImage() async {
     final XFile? picked = await _picker.pickImage(source: ImageSource.gallery);
@@ -32,9 +55,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   void _saveProfile() {
     if (_formKey.currentState!.validate()) {
-      // You can store these locally using SharedPreferences or other method
+      final updatedUser = AppUser(
+        name: _nameController.text,
+        email: _emailController.text,
+        phone: _phoneController.text.isNotEmpty ? _phoneController.text : null,
+        imagePath: _profileImage?.path,
+      );
+
+      final box = Hive.box<AppUser>('userBox');
+      box.put('profile', updatedUser);
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile saved locally')),
+        const SnackBar(content: Text('✅ Profile updated successfully')),
       );
     }
   }
@@ -83,9 +115,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   children: [
                     _buildTextField("Full Name", _nameController),
                     const SizedBox(height: 12),
-                    _buildTextField("Email", _emailController, type: TextInputType.emailAddress),
+                    _buildTextField(
+                      "Email",
+                      _emailController,
+                      enabled: _emailController.text.isEmpty, // ✅ CHANGED
+                    ),
                     const SizedBox(height: 12),
-                    _buildTextField("Phone Number", _phoneController, type: TextInputType.phone),
+                    _buildTextField(
+                      "Phone Number",
+                      _phoneController,
+                      type: TextInputType.phone,
+                    ),
                   ],
                 ),
               ),
@@ -116,9 +156,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Widget _buildTextField(String label, TextEditingController controller,
-      {TextInputType type = TextInputType.text}) {
+      {TextInputType type = TextInputType.text, bool enabled = true}) {
     return TextFormField(
       controller: controller,
+      enabled: enabled,
       style: const TextStyle(color: Colors.white),
       keyboardType: type,
       validator: (value) => value == null || value.isEmpty ? "Required field" : null,

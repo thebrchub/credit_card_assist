@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/google_auth_service.dart'; // ✅ Corrected path
+import 'package:hive_flutter/hive_flutter.dart';
+
+import '../models/user_profile.dart'; // ✅ Contains AppUser
+import '../services/google_auth_service.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -9,13 +12,34 @@ class WelcomeScreen extends StatelessWidget {
   Future<void> _continueAsGuest(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('is_logged_in', false);
-    Navigator.pushReplacementNamed(context, '/dashboard');
+
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, '/dashboard');
+    }
   }
 
   Future<void> _signInWithGoogle(BuildContext context) async {
-    final user = await GoogleAuthService.signInWithGoogle();
-    if (user != null) {
-      Navigator.pushReplacementNamed(context, '/dashboard');
+    final userCredential = await GoogleAuthService.signInWithGoogle();
+
+    if (userCredential != null) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('is_logged_in', true);
+
+      // ✅ Use consistent box name
+      final userBox = Hive.box<AppUser>('userBox');
+      final existingProfile = userBox.get('profile');
+
+      if (context.mounted) {
+        if (existingProfile == null) {
+          Navigator.pushReplacementNamed(
+            context,
+            '/user_details',
+            arguments: userCredential.user?.email ?? '',
+          );
+        } else {
+          Navigator.pushReplacementNamed(context, '/dashboard');
+        }
+      }
     } else {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

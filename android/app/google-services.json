@@ -12,7 +12,20 @@
           "package_name": "com.example.payzo"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "395962159335-tqd3c2etnf2ru2d81bnudm8mbqo52d9d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.payzo",
+            "certificate_hash": "760d515935a8c246b790b87d9885ffea674e02b5"
+          }
+        },
+        {
+          "client_id": "395962159335-8fs9piaqj2bqb53nookknatahgeaf9a8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAXdZlzXfNQtc-bsPb0aTEhlNbFIjmckbg"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395962159335-8fs9piaqj2bqb53nookknatahgeaf9a8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

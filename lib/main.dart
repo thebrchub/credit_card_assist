@@ -5,22 +5,28 @@ import 'package:path_provider/path_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'models/card_model.dart';
+import 'models/user_profile.dart';
 import 'screens/splash_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/main_dashboard.dart';
 import 'screens/onboarding_screen.dart';
+import 'screens/user_details_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // ✅ Initialize Firebase
+  // ✅ Firebase Init
   await Firebase.initializeApp();
 
-  // ✅ Initialize Hive
+  // ✅ Hive Init
   final appDir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDir.path);
+
   Hive.registerAdapter(CreditCardAdapter());
+  Hive.registerAdapter(AppUserAdapter());
+
   await Hive.openBox<CreditCard>('userCards');
+  await Hive.openBox<AppUser>('userBox'); // ✅ Unified name
 
   runApp(const PayzoApp());
 }
@@ -46,12 +52,21 @@ class PayzoApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: '/', // ✅ Entry point is SplashScreen
+      initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
         '/onboarding': (context) => const OnboardingScreen(),
         '/welcome': (context) => const WelcomeScreen(),
         '/dashboard': (context) => const MainDashboardScreen(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/user_details') {
+          final email = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (context) => UserProfileScreen(email: email),
+          );
+        }
+        return null;
       },
     );
   }
